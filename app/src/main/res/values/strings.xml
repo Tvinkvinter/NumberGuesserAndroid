@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">NumberGuesser</string>
-    <string name="instruction_1">Загадай число от 1 до 1023, и я отгадаю его за 10 попыток!</string>
-    <string name="instruction_2">От тебя требуется только говорить, больше твое число или меньше</string>
+    <string name="helloText">Привет!</string>
+    <string name="instruction_1">Загадай число от 1 до 1023, \nя отгадаю его за 10 попыток!</string>
+    <string name="instruction_2">Отмечай, больше твоё число или меньше</string>
     <string name="try_number">Попытка</string>
     <string name="button_text">Погнали!</string>
     <string name="more">Больше</string>
     <string name="less">Меньше</string>
-    <string name="finish_button">Да</string>
-    <string name="congratulations">Господа, это победа!🎉</string>
+    <string name="finish_button">Число угадано</string>
     <string name="finish_text_1">Угадано число</string>
-    <string name="attempts_spent">И всего с n-го раза!</string>
-    <string name="again_button">Еще раз!</string>
-    <string name="instruction_button">Я забыл правила 🙈</string>
+    <string name="attempts_spent">за n попыток!</string>
+    <string name="again_button">Еще раз</string>
+    <string name="instruction_button">Я забыл(а) правила</string>
 
 </resources>

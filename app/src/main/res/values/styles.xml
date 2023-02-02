@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Text">
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="TextHeader" parent="@style/Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="TextInstructions" parent="@style/Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="TextButton" parent="@style/Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.03</item>
+    </style>
+
+
+</resources>

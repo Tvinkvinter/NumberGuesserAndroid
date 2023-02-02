@@ -3,6 +3,10 @@ package com.example.numberguesser
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.widget.TextView
 import com.example.numberguesser.databinding.ActivityFinishBinding
 
 class FinishActivity : AppCompatActivity() {
@@ -12,6 +16,9 @@ class FinishActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFinishBinding.inflate(layoutInflater).also { setContentView(it.root) }
+
+        setHeader()
+
         binding.againButton.setOnClickListener { onClickAgain() }
         binding.instructionButton.setOnClickListener { onClickInstruction() }
 
@@ -23,6 +30,20 @@ class FinishActivity : AppCompatActivity() {
         binding.attemptsSpentText.text =
             binding.attemptsSpentText.text.replace(Regex("n"), curTryNumber.toString())
 
+    }
+
+    private fun setHeader() {
+        val spannable = SpannableStringBuilder(getString(R.string.app_name))
+        spannable.setSpan(
+            ForegroundColorSpan(getColor(R.color.capital_letter_color)),
+            0, 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        spannable.setSpan(
+            ForegroundColorSpan(getColor(R.color.capital_letter_color)),
+            6, 7, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        val header: TextView = findViewById(R.id.headerText)
+        header.text = spannable
     }
 
     private fun onClickAgain() {

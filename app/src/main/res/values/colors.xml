@@ -7,8 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="red_button">#FFA01818</color>
-    <color name="green_button">#FF16870C</color>
-    <color name="finish_button">#FFE5A602</color>
+
+    <color name="shadow_color">#1A000000</color>
+    <color name="capital_letter_color">#7700EE</color>
+    <color name="instruction_box_background">#FCFAFF</color>
+    <color name="instruction_box_border">#A24FF3</color>
+    <color name="start_button_background">#E4D0F9</color>
+    <color name="less_more_button">#D2ADF9</color>
+
 
 </resources>

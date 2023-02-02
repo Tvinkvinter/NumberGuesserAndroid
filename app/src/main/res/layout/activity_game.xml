@@ -7,64 +7,78 @@
     tools:context=".GameActivity">
 
     <TextView
-        android:id="@+id/try_number"
+        android:id="@+id/headerText"
+        style="@style/TextHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tryNumberText"
+        style="@style/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="190dp"
         android:text="@string/try_number"
-        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/number"
+        style="@style/Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="200dp"
-        android:text="512"
-        android:textSize="70sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="56sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tryNumberText" />
 
-    <LinearLayout
-        android:id="@+id/red_green_buttons"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/finish_button"
+        style="@style/TextButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginHorizontal="79dp"
+        android:layout_marginBottom="45dp"
+        android:background="@drawable/base_button"
+        android:text="@string/finish_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/less_button"
+        style="@style/TextButton"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/less_more_button"
+        android:text="@string/less"
+        app:layout_constraintBottom_toTopOf="@id/finish_button"
+        app:layout_constraintEnd_toStartOf="@id/more_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/more_button"
+        style="@style/TextButton"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/less_more_button"
+        android:text="@string/more"
         app:layout_constraintBottom_toTopOf="@id/finish_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toEndOf="@id/less_button" />
 
-
-        <Button
-            android:id="@+id/red_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/less"
-            app:backgroundTint="@color/red_button" />
-
-        <Button
-            android:id="@+id/green_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="@string/more"
-            app:backgroundTint="@color/green_button" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/finish_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/finish_button"
-        android:text="@string/finish_button"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
