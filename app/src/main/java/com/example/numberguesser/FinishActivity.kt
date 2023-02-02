@@ -7,6 +7,7 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import com.example.numberguesser.databinding.ActivityFinishBinding
 
 class FinishActivity : AppCompatActivity() {
@@ -18,6 +19,8 @@ class FinishActivity : AppCompatActivity() {
         binding = ActivityFinishBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
         setHeader()
+        if(Math.random() > 0.5)
+        binding.background.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.bg_finish_digits))
 
         binding.againButton.setOnClickListener { onClickAgain() }
         binding.instructionButton.setOnClickListener { onClickInstruction() }
