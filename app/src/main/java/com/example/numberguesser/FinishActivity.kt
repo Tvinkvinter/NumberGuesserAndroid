@@ -20,7 +20,7 @@ class FinishActivity : AppCompatActivity() {
 
         setHeader()
         if(Math.random() > 0.5)
-        binding.background.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.bg_finish_digits))
+            binding.background?.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.bg_finish_digits))
 
         binding.againButton.setOnClickListener { onClickAgain() }
         binding.instructionButton.setOnClickListener { onClickInstruction() }
