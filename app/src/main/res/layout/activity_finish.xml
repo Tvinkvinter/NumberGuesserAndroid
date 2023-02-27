@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".FinishActivity">
 
     <ImageView
         android:id="@+id/background"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:focusableInTouchMode="false"
         android:src="@drawable/bg_finish_shapes"
-        android:focusableInTouchMode="false"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/background_description" />
 
     <TextView
         android:id="@+id/headerText"
@@ -66,9 +68,9 @@
         android:layout_width="0dp"
         android:layout_height="34dp"
         android:layout_marginHorizontal="79dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/base_button"
         android:text="@string/again_button"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@id/instruction_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

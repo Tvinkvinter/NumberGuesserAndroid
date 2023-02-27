@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text_color">#FFFFFF</color>
+    <color name="instruction_box_border">#A24FF3</color>
+    <color name="capital_letter_color">#D2ADF9</color>
+    <color name="instruction_box_background">#3B3840</color>
+    <color name="background">#333037</color>
+</resources>

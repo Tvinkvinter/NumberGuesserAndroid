@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".MainActivity">
     <!--First screen-->
 
@@ -45,11 +46,11 @@
         style="@style/TextInstructions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textFontWeight="400"
         android:layout_marginStart="10dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="10dp"
         android:text="@string/instruction_1"
+        android:textFontWeight="400"
         app:layout_constraintEnd_toEndOf="@id/instruction_box"
         app:layout_constraintStart_toStartOf="@id/instruction_box"
         app:layout_constraintTop_toTopOf="@id/instruction_box" />
