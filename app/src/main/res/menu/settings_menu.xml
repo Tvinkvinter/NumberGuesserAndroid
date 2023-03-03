@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:title="@string/dark_mode"
+        app:actionViewClass="android.widget.Switch" />
+    <item
+        android:id="@+id/text_range_item"
+        android:title="@string/menu_game_range"
+        app:actionViewClass="android.widget.TextView" />
+    <item
+        android:id="@+id/slider_item"
+        android:title=""
+        app:actionViewClass="com.google.android.material.slider.Slider" />
+
+</menu>

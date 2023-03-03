@@ -8,11 +8,14 @@
         <item name="android:textFontWeight">500</item>
     </style>
 
+    <style name="TextMenu" parent="@style/Text">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="TextHeader" parent="@style/Text">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:textFontWeight">700</item>
-        <item name="android:textColor">@color/text_color</item>
     </style>
 
     <style name="TextInstructions" parent="@style/Text">
@@ -21,7 +24,6 @@
         <item name="android:lineSpacingExtra">2dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textFontWeight">400</item>
-        <item name="android:textColor">@color/text_color</item>
     </style>
 
     <style name="TextButton" parent="@style/Text">

@@ -13,4 +13,7 @@
     <string name="again_button">Еще раз</string>
     <string name="instruction_button">Я забыл(а) правила</string>
     <string name="background_description">Background with shapes or numbers</string>
+    <string name="dark_mode">Темная тема</string>
+    <string name="menu_game_range">Диапазон для игры</string>
+    <string name="menu_game_range_val">0 - %d</string>
 </resources>

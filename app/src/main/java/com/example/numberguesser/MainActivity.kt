@@ -1,38 +1,52 @@
 package com.example.numberguesser
 
 import android.content.Intent
-import android.graphics.Color
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
-import android.view.View
-import android.webkit.WebSettings
-import android.widget.Button
-import android.widget.LinearLayout
+import android.view.Gravity
 import android.widget.TextView
-import androidx.annotation.ColorInt
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.ContextCompat
-import kotlin.math.pow
+import androidx.core.view.GravityCompat
+import com.example.numberguesser.databinding.ActivityMainBinding
+import com.google.android.material.slider.Slider
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var startButton: Button
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
         setHeader()
         setInstructions()
 
-        startButton = findViewById(R.id.startButton)
-        startButton.setOnClickListener { onStartPressed() }
+        binding.menuIcon.setOnClickListener { binding.drawer.openDrawer(GravityCompat.END) }
+
+        val rangeText =
+            binding.settingsMenu.menu.findItem(R.id.text_range_item).actionView as TextView
+        rangeText.gravity = Gravity.CENTER_VERTICAL
+
+        val sliderView = binding.settingsMenu.menu.findItem(R.id.slider_item).actionView as Slider
+        with(sliderView) {
+            valueFrom = 0.0F
+            value = 1000.0F
+            valueTo = 10000.0F
+            stepSize = 100.0F
+
+        }
+
+        rangeText.text = getString(R.string.menu_game_range_val, sliderView.value.toInt())
+
+        sliderView.addOnChangeListener { _, value, _ ->
+            rangeText.text = getString(R.string.menu_game_range_val, value.toInt())
+        }
+
+        binding.startButton.setOnClickListener { onStartPressed() }
 
     }
 
@@ -66,6 +80,6 @@ class MainActivity : AppCompatActivity() {
             AbsoluteSizeSpan(22, true),
             22, 26, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
         )
-        findViewById<TextView>(R.id.instruction_text_1).text = spannable
+        binding.instructionText1.text = spannable
     }
 }
