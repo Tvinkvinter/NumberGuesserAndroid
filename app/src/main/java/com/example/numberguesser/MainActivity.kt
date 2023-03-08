@@ -1,32 +1,65 @@
 package com.example.numberguesser
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
+import com.example.numberguesser.contract.Navigator
 import com.example.numberguesser.databinding.ActivityMainBinding
 import com.google.android.material.slider.Slider
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Navigator {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var options: Options
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.fragment_container, MainFragment())
+                .commit()
+        }
+        options = savedInstanceState?.getParcelable(KEY_OPTIONS) ?: Options.DEFAULT
+
         setHeader()
-        setInstructions()
 
-        binding.menuIcon.setOnClickListener { binding.drawer.openDrawer(GravityCompat.END) }
+        binding.menuIcon.setOnClickListener {
+            binding.drawer.openDrawer(GravityCompat.END)
+        }
 
+        setMenu()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(KEY_OPTIONS, options)
+    }
+
+    private fun setHeader() {
+        val spannable = SpannableStringBuilder(getString(R.string.app_name))
+        spannable.setSpan(
+            ForegroundColorSpan(getColor(R.color.capital_letter_color)),
+            0, 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        spannable.setSpan(
+            ForegroundColorSpan(getColor(R.color.capital_letter_color)),
+            6, 7, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+        val header: TextView = findViewById(R.id.headerText)
+        header.text = spannable
+    }
+
+    private fun setMenu() {
         val rangeText =
             binding.settingsMenu.menu.findItem(R.id.text_range_item).actionView as TextView
         rangeText.gravity = Gravity.CENTER_VERTICAL
@@ -45,41 +78,32 @@ class MainActivity : AppCompatActivity() {
         sliderView.addOnChangeListener { _, value, _ ->
             rangeText.text = getString(R.string.menu_game_range_val, value.toInt())
         }
-
-        binding.startButton.setOnClickListener { onStartPressed() }
-
     }
 
-    private fun onStartPressed() {
-        val intent = Intent(this, GameActivity::class.java)
-        startActivity(intent)
+    override fun showMainScreen() {
+        launchFragment(MainFragment())
     }
 
-    private fun setHeader() {
-        val spannable = SpannableStringBuilder(getString(R.string.app_name))
-        spannable.setSpan(
-            ForegroundColorSpan(getColor(R.color.capital_letter_color)),
-            0, 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-        spannable.setSpan(
-            ForegroundColorSpan(getColor(R.color.capital_letter_color)),
-            6, 7, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-        val header: TextView = findViewById(R.id.headerText)
-        header.text = spannable
+    override fun showGameScreen() {
+        options.tryNumber = 1
+        options.curNumber = options.maxNumber / 2
+        launchFragment(GameFragment.newInstance(options))
     }
 
-    private fun setInstructions() {
-        val spannable = SpannableStringBuilder(getString(R.string.instruction_1))
-        spannable.setSpan(
-            AbsoluteSizeSpan(22, true),
-            17, 18, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-        )
+    override fun showFinishScreen(options: Options) {
+        launchFragment(FinishFragment.newInstance(options))
+    }
 
-        spannable.setSpan(
-            AbsoluteSizeSpan(22, true),
-            22, 26, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-        binding.instructionText1.text = spannable
+    private fun launchFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .addToBackStack(null)
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
+
+    companion object {
+        @JvmStatic
+        private val KEY_OPTIONS = "OPTIONS"
     }
 }
