@@ -11,6 +11,6 @@ data class Options(
 ) : Parcelable {
 
     companion object {
-        @JvmStatic val DEFAULT = Options(maxNumber = 1024, tryNumber = 1, curNumber = 512)
+        @JvmStatic val DEFAULT = Options(maxNumber = 1000, tryNumber = 1, curNumber = 500)
     }
 }

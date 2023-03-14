@@ -5,8 +5,9 @@
     tools:showIn="navigation_view">
 
     <item
+        android:id="@+id/switch_item"
         android:title="@string/dark_mode"
-        app:actionViewClass="android.widget.Switch" />
+        app:actionViewClass="com.google.android.material.switchmaterial.SwitchMaterial" />
     <item
         android:id="@+id/text_range_item"
         android:title="@string/menu_game_range"

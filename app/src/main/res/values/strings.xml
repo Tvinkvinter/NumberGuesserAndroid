@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">NumberGuesser</string>
     <string name="helloText">Привет!</string>
-    <string name="instruction_1">Загадай число от 1 до 1023, \nя отгадаю его за 10 попыток!</string>
+    <string name="instruction_1">Загадай число от 1 до %d, \nя отгадаю его за %d попыток!</string>
     <string name="instruction_2">Отмечай, больше твоё число или меньше</string>
     <string name="try_number">Попытка %d</string>
     <string name="button_text">Погнали!</string>

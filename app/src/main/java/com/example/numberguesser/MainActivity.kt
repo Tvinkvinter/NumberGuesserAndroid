@@ -7,11 +7,13 @@ import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.numberguesser.contract.Navigator
 import com.example.numberguesser.databinding.ActivityMainBinding
 import com.google.android.material.slider.Slider
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class MainActivity : AppCompatActivity(), Navigator {
 
@@ -23,13 +25,13 @@ class MainActivity : AppCompatActivity(), Navigator {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
 
+        options = savedInstanceState?.getParcelable(KEY_OPTIONS) ?: Options.DEFAULT
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment_container, MainFragment())
+                .replace(R.id.fragment_container, MainFragment.newInstance(options), "Main")
                 .commit()
         }
-        options = savedInstanceState?.getParcelable(KEY_OPTIONS) ?: Options.DEFAULT
 
         setHeader()
 
@@ -60,6 +62,13 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     private fun setMenu() {
+        val switchView =
+            binding.settingsMenu.menu.findItem(R.id.switch_item).actionView as SwitchMaterial
+        switchView.setOnCheckedChangeListener { _, b ->
+            if (b) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         val rangeText =
             binding.settingsMenu.menu.findItem(R.id.text_range_item).actionView as TextView
         rangeText.gravity = Gravity.CENTER_VERTICAL
@@ -70,18 +79,29 @@ class MainActivity : AppCompatActivity(), Navigator {
             value = 1000.0F
             valueTo = 10000.0F
             stepSize = 100.0F
-
         }
 
         rangeText.text = getString(R.string.menu_game_range_val, sliderView.value.toInt())
 
         sliderView.addOnChangeListener { _, value, _ ->
             rangeText.text = getString(R.string.menu_game_range_val, value.toInt())
+            options.maxNumber = value.toInt()
+            (supportFragmentManager.findFragmentByTag("Main") as MainFragment).updateInstructions()
         }
     }
 
+    fun hideRangeItem() {
+        binding.settingsMenu.menu.findItem(R.id.text_range_item).isVisible = false
+        binding.settingsMenu.menu.findItem(R.id.slider_item).isVisible = false
+    }
+
+    fun showRangeItem() {
+        binding.settingsMenu.menu.findItem(R.id.text_range_item).isVisible = true
+        binding.settingsMenu.menu.findItem(R.id.slider_item).isVisible = true
+    }
+
     override fun showMainScreen() {
-        launchFragment(MainFragment())
+        launchFragment(MainFragment.newInstance(options))
     }
 
     override fun showGameScreen() {

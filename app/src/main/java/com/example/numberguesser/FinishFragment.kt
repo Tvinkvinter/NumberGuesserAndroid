@@ -16,7 +16,6 @@ class FinishFragment : Fragment() {
 
     private lateinit var options: Options
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -30,6 +29,8 @@ class FinishFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFinishBinding.inflate(inflater)
+
+        (requireActivity() as MainActivity).hideRangeItem()
 
         val curTryNumber = options.tryNumber
         val curNumberVal = options.curNumber
