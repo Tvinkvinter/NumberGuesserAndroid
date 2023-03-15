@@ -75,10 +75,11 @@ class MainActivity : AppCompatActivity(), Navigator {
 
         val sliderView = binding.settingsMenu.menu.findItem(R.id.slider_item).actionView as Slider
         with(sliderView) {
-            valueFrom = 0.0F
+            valueFrom = 100.0F
             value = 1000.0F
             valueTo = 10000.0F
             stepSize = 100.0F
+            isTickVisible=false
         }
 
         rangeText.text = getString(R.string.menu_game_range_val, sliderView.value.toInt())
