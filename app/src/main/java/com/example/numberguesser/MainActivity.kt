@@ -1,5 +1,7 @@
 package com.example.numberguesser
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -18,6 +20,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 class MainActivity : AppCompatActivity(), Navigator {
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var preferences: SharedPreferences
 
     private lateinit var options: Options
 
@@ -39,12 +43,24 @@ class MainActivity : AppCompatActivity(), Navigator {
             binding.drawer.openDrawer(GravityCompat.END)
         }
 
+        preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
         setMenu()
+        restoreFromSharedPreferences()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelable(KEY_OPTIONS, options)
+    }
+
+    fun restoreFromSharedPreferences(){
+        if (preferences.getBoolean(PREF_DARK_MODE, false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+        options.maxNumber = preferences.getFloat(PREF_SLIDER_VAL, options.maxNumber.toFloat()).toInt()
     }
 
     private fun setHeader() {
@@ -64,9 +80,17 @@ class MainActivity : AppCompatActivity(), Navigator {
     private fun setMenu() {
         val switchView =
             binding.settingsMenu.menu.findItem(R.id.switch_item).actionView as SwitchMaterial
+
+        switchView.isChecked = preferences.getBoolean(PREF_DARK_MODE, false)
+
         switchView.setOnCheckedChangeListener { _, b ->
-            if (b) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            else AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            if (b) {
+                preferences.edit().putBoolean(PREF_DARK_MODE, true).apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                preferences.edit().putBoolean(PREF_DARK_MODE, false).apply()
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
 
         val rangeText =
@@ -76,15 +100,22 @@ class MainActivity : AppCompatActivity(), Navigator {
         val sliderView = binding.settingsMenu.menu.findItem(R.id.slider_item).actionView as Slider
         with(sliderView) {
             valueFrom = 100.0F
-            value = 1000.0F
+            value = preferences.getFloat(PREF_SLIDER_VAL, 1000F)
             valueTo = 10000.0F
             stepSize = 100.0F
-            isTickVisible=false
+            isTickVisible = false
         }
 
         rangeText.text = getString(R.string.menu_game_range_val, sliderView.value.toInt())
 
+//        sliderView.addOnChangeListener { _, value, _ ->
+//            rangeText.text = getString(R.string.menu_game_range_val, value.toInt())
+//            options.maxNumber = value.toInt()
+//            (supportFragmentManager.findFragmentByTag("Main") as MainFragment).updateInstructions()
+//
+//        }
         sliderView.addOnChangeListener { _, value, _ ->
+            preferences.edit().putFloat(PREF_SLIDER_VAL, value).apply()
             rangeText.text = getString(R.string.menu_game_range_val, value.toInt())
             options.maxNumber = value.toInt()
             (supportFragmentManager.findFragmentByTag("Main") as MainFragment).updateInstructions()
@@ -126,5 +157,14 @@ class MainActivity : AppCompatActivity(), Navigator {
     companion object {
         @JvmStatic
         private val KEY_OPTIONS = "OPTIONS"
+
+        @JvmStatic
+        private val APP_PREFERENCES = "APP_PREFERENCES"
+
+        @JvmStatic
+        private val PREF_DARK_MODE = "PREF_DARK_MODE"
+
+        @JvmStatic
+        private val PREF_SLIDER_VAL = "PREF_SLIDER_VAL"
     }
 }
