@@ -1,11 +1,13 @@
 package com.example.numberguesser
 
+import android.app.AlertDialog
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import com.example.numberguesser.contract.navigator
 import com.example.numberguesser.databinding.FragmentGameBinding
@@ -36,14 +38,16 @@ class GameFragment : Fragment() {
     ): View {
         binding = FragmentGameBinding.inflate(inflater)
 
-        (requireActivity() as MainActivity).hideRangeItem()
+        binding.openMenuButton.setOnClickListener {
+            showHelpCardDialog()
+        }
+
+        binding.attemptsSpentText.text = getString(R.string.attempt_number, options.tryNumber)
+        binding.currentNumber.text = options.curNumber.toString()
 
         binding.lessButton.setOnClickListener { onClickButtons(it) }
         binding.moreButton.setOnClickListener { onClickButtons(it) }
         binding.finishButton.setOnClickListener { onClickFinish() }
-
-        binding.tryNumberText.text = getString(R.string.try_number, options.tryNumber)
-        binding.number.text = options.curNumber.toString()
         return binding.root
     }
 
@@ -57,8 +61,8 @@ class GameFragment : Fragment() {
             R.id.less_button -> onClickLessButton()
             R.id.more_button -> onClickMoreButton()
         }
-        binding.tryNumberText.text = getString(R.string.try_number, options.tryNumber)
-        binding.number.text = options.curNumber.toString()
+        binding.attemptsSpentText.text = getString(R.string.attempt_number, options.tryNumber)
+        binding.currentNumber.text = options.curNumber.toString()
         if (options.tryNumber >= limitPow) onClickFinish()
     }
 
@@ -66,7 +70,7 @@ class GameFragment : Fragment() {
         if (options.curNumber == 1) {
             Toast.makeText(
                 requireActivity().applicationContext,
-                "Не по правилам",
+                getString(R.string.less_button_warning, 1),
                 Toast.LENGTH_SHORT
             ).show()
         } else {
@@ -79,7 +83,7 @@ class GameFragment : Fragment() {
         if (options.curNumber == options.maxNumber) {
             Toast.makeText(
                 requireActivity().applicationContext,
-                "Не по правилам",
+                getString(R.string.more_button_warning, options.maxNumber),
                 Toast.LENGTH_SHORT
             ).show()
         } else {
@@ -99,14 +103,31 @@ class GameFragment : Fragment() {
 
     private fun binarySearch(nextIsMore: Boolean) {
         curRange = (curRange.toFloat() / 2).roundToInt()
-        Log.i("Range", "$curRange")
         options.curNumber += if (nextIsMore) {
             curRange
         } else {
             -curRange
         }
-        if(options.curNumber < 1) options.curNumber = 1
-        if(options.curNumber > options.maxNumber) options.curNumber = options.maxNumber
+        if (options.curNumber < 1) options.curNumber = 1
+        if (options.curNumber > options.maxNumber) options.curNumber = options.maxNumber
+    }
+
+    private fun showHelpCardDialog() {
+        val builder = AlertDialog.Builder(requireActivity(), R.style.AlertDialogTheme)
+        val view = LayoutInflater.from(requireActivity()).inflate(
+            R.layout.help_dialog_card, requireActivity().findViewById(R.id.dialog_card)
+        )
+        builder.setView(view)
+
+        val alertDialog = builder.create()
+
+        if (alertDialog.window != null) {
+            alertDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        }
+        (view.findViewById(R.id.dialog_ok_button) as Button).setOnClickListener {
+            alertDialog.dismiss()
+        }
+        alertDialog.show()
     }
 
     companion object {

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="46dp"
+    android:layout_marginTop="140dp"
+    android:layout_marginBottom="200dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/help_dialog_title"
+            android:textColor="@color/secondary_color" />
+
+        <TextView
+            style="@style/DialogTextInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="20dp"
+            android:text="@string/help_dialog_message" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dialog_ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/base_button"
+            android:backgroundTint="@color/secondary_color"
+            android:gravity="center"
+            android:text="@string/help_dialog_ok"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

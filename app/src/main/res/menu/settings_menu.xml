@@ -8,13 +8,5 @@
         android:id="@+id/switch_item"
         android:title="@string/dark_mode"
         app:actionViewClass="com.google.android.material.switchmaterial.SwitchMaterial" />
-    <item
-        android:id="@+id/text_range_item"
-        android:title="@string/menu_game_range"
-        app:actionViewClass="android.widget.TextView" />
-    <item
-        android:id="@+id/slider_item"
-        android:title=""
-        app:actionViewClass="com.google.android.material.slider.Slider" />
 
 </menu>

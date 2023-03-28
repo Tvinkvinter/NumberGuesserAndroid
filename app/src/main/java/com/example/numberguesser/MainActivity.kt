@@ -3,25 +3,19 @@ package com.example.numberguesser
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.view.Gravity
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.numberguesser.contract.Navigator
 import com.example.numberguesser.databinding.ActivityMainBinding
-import com.google.android.material.slider.Slider
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class MainActivity : AppCompatActivity(), Navigator {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var preferences: SharedPreferences
+    lateinit var preferences: SharedPreferences
 
     private lateinit var options: Options
 
@@ -37,9 +31,7 @@ class MainActivity : AppCompatActivity(), Navigator {
                 .commit()
         }
 
-        setHeader()
-
-        binding.menuIcon.setOnClickListener {
+        binding.openMenuButton.setOnClickListener {
             binding.drawer.openDrawer(GravityCompat.END)
         }
 
@@ -53,28 +45,15 @@ class MainActivity : AppCompatActivity(), Navigator {
         outState.putParcelable(KEY_OPTIONS, options)
     }
 
-    fun restoreFromSharedPreferences(){
+    fun restoreFromSharedPreferences() {
         if (preferences.getBoolean(PREF_DARK_MODE, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
-        options.maxNumber = preferences.getFloat(PREF_SLIDER_VAL, options.maxNumber.toFloat()).toInt()
-    }
-
-    private fun setHeader() {
-        val spannable = SpannableStringBuilder(getString(R.string.app_name))
-        spannable.setSpan(
-            ForegroundColorSpan(getColor(R.color.capital_letter_color)),
-            0, 1, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-        spannable.setSpan(
-            ForegroundColorSpan(getColor(R.color.capital_letter_color)),
-            6, 7, Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-        val header: TextView = findViewById(R.id.headerText)
-        header.text = spannable
+        options.maxNumber =
+            preferences.getFloat(PREF_SLIDER_VAL, options.maxNumber.toFloat()).toInt()
     }
 
     private fun setMenu() {
@@ -92,44 +71,6 @@ class MainActivity : AppCompatActivity(), Navigator {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
-
-        val rangeText =
-            binding.settingsMenu.menu.findItem(R.id.text_range_item).actionView as TextView
-        rangeText.gravity = Gravity.CENTER_VERTICAL
-
-        val sliderView = binding.settingsMenu.menu.findItem(R.id.slider_item).actionView as Slider
-        with(sliderView) {
-            valueFrom = 100.0F
-            value = preferences.getFloat(PREF_SLIDER_VAL, 1000F)
-            valueTo = 10000.0F
-            stepSize = 100.0F
-            isTickVisible = false
-        }
-
-        rangeText.text = getString(R.string.menu_game_range_val, sliderView.value.toInt())
-
-//        sliderView.addOnChangeListener { _, value, _ ->
-//            rangeText.text = getString(R.string.menu_game_range_val, value.toInt())
-//            options.maxNumber = value.toInt()
-//            (supportFragmentManager.findFragmentByTag("Main") as MainFragment).updateInstructions()
-//
-//        }
-        sliderView.addOnChangeListener { _, value, _ ->
-            preferences.edit().putFloat(PREF_SLIDER_VAL, value).apply()
-            rangeText.text = getString(R.string.menu_game_range_val, value.toInt())
-            options.maxNumber = value.toInt()
-            (supportFragmentManager.findFragmentByTag("Main") as MainFragment).updateInstructions()
-        }
-    }
-
-    fun hideRangeItem() {
-        binding.settingsMenu.menu.findItem(R.id.text_range_item).isVisible = false
-        binding.settingsMenu.menu.findItem(R.id.slider_item).isVisible = false
-    }
-
-    fun showRangeItem() {
-        binding.settingsMenu.menu.findItem(R.id.text_range_item).isVisible = true
-        binding.settingsMenu.menu.findItem(R.id.slider_item).isVisible = true
     }
 
     override fun showMainScreen() {
@@ -165,6 +106,6 @@ class MainActivity : AppCompatActivity(), Navigator {
         private val PREF_DARK_MODE = "PREF_DARK_MODE"
 
         @JvmStatic
-        private val PREF_SLIDER_VAL = "PREF_SLIDER_VAL"
+        val PREF_SLIDER_VAL = "PREF_SLIDER_VAL"
     }
 }

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.FragmentManager
 import com.example.numberguesser.contract.navigator
 import com.example.numberguesser.databinding.FragmentFinishBinding
@@ -30,24 +29,14 @@ class FinishFragment : Fragment() {
     ): View {
         binding = FragmentFinishBinding.inflate(inflater)
 
-        (requireActivity() as MainActivity).hideRangeItem()
-
         val curTryNumber = options.tryNumber
         val curNumberVal = options.curNumber
 
-        if (Math.random() > 0.5)
-            binding.background.setImageDrawable(
-                AppCompatResources.getDrawable(
-                    requireContext(),
-                    R.drawable.bg_finish_digits
-                )
-            )
-
         binding.againButton.setOnClickListener { onClickAgain() }
-        binding.instructionButton.setOnClickListener { onClickInstruction() }
+        binding.goToBeginButton.setOnClickListener { onClickGoToBegin() }
 
-        binding.guessedNumberText.text = curNumberVal.toString()
-        binding.attemptsSpentText.text = getString(R.string.attempts_spent, curTryNumber)
+        binding.guessedNumber.text = curNumberVal.toString()
+        binding.attemptsSpentText.text = getString(R.string.finish_attempts, curTryNumber)
 
         return binding.root
     }
@@ -58,7 +47,7 @@ class FinishFragment : Fragment() {
         navigator().showGameScreen()
     }
 
-    private fun onClickInstruction() {
+    private fun onClickGoToBegin() {
         requireActivity().supportFragmentManager.popBackStack(
             null,
             FragmentManager.POP_BACK_STACK_INCLUSIVE

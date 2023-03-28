@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.NumberGuesser" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/button_background</item>
+        <item name="colorPrimary">@color/primary_color</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/button_background</item>
+        <item name="colorSecondary">@color/secondary_color</item>
     </style>
 </resources>

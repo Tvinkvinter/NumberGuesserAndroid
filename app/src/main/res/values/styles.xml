@@ -1,34 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Text">
-        <item name="fontFamily">@font/montserrat</item>
         <item name="android:textColor">@color/text_color</item>
-        <item name="android:letterSpacing">0.03</item>
-        <item name="android:textSize">26sp</item>
-        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextMenu" parent="@style/Text">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="TextBig" parent="@style/Text">
+        <item name="android:textSize">40sp</item>
     </style>
 
     <style name="TextHeader" parent="@style/Text">
-        <item name="android:textSize">18sp</item>
-        <item name="android:letterSpacing">0.04</item>
-        <item name="android:textFontWeight">700</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="TextInstructions" parent="@style/Text">
-        <item name="android:textSize">18sp</item>
-        <item name="android:letterSpacing">0.03</item>
-        <item name="android:lineSpacingExtra">2dp</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="DialogTextInstructions" parent="@style/Text">
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="TextButton" parent="@style/Text">
-        <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">0.03</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
+
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+
 </resources>

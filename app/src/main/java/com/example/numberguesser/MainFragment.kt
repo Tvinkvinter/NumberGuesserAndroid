@@ -1,9 +1,6 @@
 package com.example.numberguesser
 
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.AbsoluteSizeSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,10 +25,31 @@ class MainFragment : Fragment() {
     ): View {
         binding = FragmentMainBinding.inflate(inflater)
 
-        (requireActivity() as MainActivity).showRangeItem()
-
         binding.startButton.setOnClickListener { onStartPressed() }
-        updateInstructions()
+
+        binding.numberRangeSlider.value = (requireActivity() as MainActivity).preferences.getFloat(
+            MainActivity.PREF_SLIDER_VAL,
+            1000F
+        )
+        binding.numberRangeSlider.addOnChangeListener { _, value, _ ->
+            (requireActivity() as MainActivity).preferences.edit()
+                .putFloat(MainActivity.PREF_SLIDER_VAL, value).apply()
+            binding.numberRangeText.text =
+                getString(R.string.guessed_number_range, 1, value.toInt())
+            binding.takeAttemptsText.text =
+                getString(R.string.instruction_take_attempts, countMaxTries(value.toInt()))
+            options.maxNumber = value.toInt()
+        }
+
+        binding.numberRangeText.text =
+            getString(
+                R.string.guessed_number_range,
+                1, binding.numberRangeSlider.value.toInt()
+            )
+        binding.takeAttemptsText.text = getString(
+            R.string.instruction_take_attempts,
+            countMaxTries(binding.numberRangeSlider.value.toInt())
+        )
 
         return binding.root
     }
@@ -43,45 +61,6 @@ class MainFragment : Fragment() {
 
     private fun onStartPressed() {
         navigator().showGameScreen()
-    }
-
-    fun updateInstructions() {
-        binding.instructionText1.text = formatInstructions()
-    }
-
-    private fun formatInstructions(): Spannable {
-        val maxTries = countMaxTries(options.maxNumber)
-        val text = getString(R.string.instruction_1, options.maxNumber, maxTries)
-        var isNumber = false
-        val numbersToSpan: MutableList<Int> = arrayListOf() //start1, end1, start2, end2, ...
-        var curPairIndex = 0
-        for ((index, letter) in text.withIndex()) {
-            if (letter.isDigit()) {
-                if (!isNumber) {
-                    isNumber = true
-                    numbersToSpan.add(index)
-                    curPairIndex++
-                }
-            } else {
-                if (isNumber) {
-                    isNumber = false
-                    numbersToSpan.add(index)
-                    curPairIndex++
-                }
-            }
-        }
-        val spannable =
-            SpannableStringBuilder(getString(R.string.instruction_1, options.maxNumber, maxTries))
-        spannable.setSpan(
-            AbsoluteSizeSpan(22, true),
-            numbersToSpan[0], numbersToSpan[1], Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-
-        spannable.setSpan(
-            AbsoluteSizeSpan(22, true),
-            numbersToSpan[2], numbersToSpan[3], Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-        )
-        return spannable
     }
 
     companion object {
