@@ -45,4 +45,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.7.10"
     implementation "androidx.fragment:fragment-ktx:1.5.5"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
 }

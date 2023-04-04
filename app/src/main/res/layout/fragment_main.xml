@@ -9,6 +9,7 @@
     tools:context=".MainFragment">
 
     <View
+        android:id="@+id/top_panel1"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@color/primary_color"

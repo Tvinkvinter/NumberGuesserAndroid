@@ -9,7 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import com.example.numberguesser.contract.navigator
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.example.numberguesser.databinding.FragmentGameBinding
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
@@ -23,19 +24,14 @@ class GameFragment : Fragment() {
     private var limitPow by Delegates.notNull<Int>()
 
     private var curRange by Delegates.notNull<Int>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        options = arguments?.getParcelable(KEY_OPTIONS)
-            ?: throw IllegalArgumentException("Can't launch GameFragment without options")
-        limitPow = countMaxTries(options.maxNumber)
-        curRange = options.curNumber
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        options = requireArguments().getParcelable(KEY_OPTIONS)!!
+        limitPow = countMaxTries(options.maxNumber)
+        curRange = options.curNumber
+
         binding = FragmentGameBinding.inflate(inflater)
 
         binding.openMenuButton.setOnClickListener {
@@ -97,7 +93,10 @@ class GameFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        navigator().showFinishScreen(options)
+        findNavController().navigate(
+            R.id.action_gameFragment_to_finishFragment,
+            bundleOf(FinishFragment.KEY_OPTIONS to options)
+        )
     }
 
 
@@ -131,15 +130,6 @@ class GameFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        private val KEY_OPTIONS = "OPTIONS"
-
-        fun newInstance(options: Options): GameFragment {
-            val args = Bundle()
-            args.putParcelable(KEY_OPTIONS, options)
-            val fragment = GameFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        const val KEY_OPTIONS = "OPTIONS"
     }
 }

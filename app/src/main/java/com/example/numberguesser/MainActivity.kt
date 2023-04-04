@@ -6,36 +6,24 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
-import com.example.numberguesser.contract.Navigator
 import com.example.numberguesser.databinding.ActivityMainBinding
 import com.google.android.material.switchmaterial.SwitchMaterial
 
-class MainActivity : AppCompatActivity(), Navigator {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityMainBinding
-
     lateinit var preferences: SharedPreferences
-
     private lateinit var options: Options
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
-
+        preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
         options = savedInstanceState?.getParcelable(KEY_OPTIONS) ?: Options.DEFAULT
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, MainFragment.newInstance(options), "Main")
-                .commit()
-        }
-
         binding.openMenuButton.setOnClickListener {
             binding.drawer.openDrawer(GravityCompat.END)
         }
 
-        preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
         setMenu()
         restoreFromSharedPreferences()
     }
@@ -61,7 +49,6 @@ class MainActivity : AppCompatActivity(), Navigator {
             binding.settingsMenu.menu.findItem(R.id.switch_item).actionView as SwitchMaterial
 
         switchView.isChecked = preferences.getBoolean(PREF_DARK_MODE, false)
-
         switchView.setOnCheckedChangeListener { _, b ->
             if (b) {
                 preferences.edit().putBoolean(PREF_DARK_MODE, true).apply()
@@ -71,28 +58,6 @@ class MainActivity : AppCompatActivity(), Navigator {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
-    }
-
-    override fun showMainScreen() {
-        launchFragment(MainFragment.newInstance(options))
-    }
-
-    override fun showGameScreen() {
-        options.tryNumber = 1
-        options.curNumber = options.maxNumber / 2
-        launchFragment(GameFragment.newInstance(options))
-    }
-
-    override fun showFinishScreen(options: Options) {
-        launchFragment(FinishFragment.newInstance(options))
-    }
-
-    private fun launchFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .addToBackStack(null)
-            .replace(R.id.fragment_container, fragment)
-            .commit()
     }
 
     companion object {

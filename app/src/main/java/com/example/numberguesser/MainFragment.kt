@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.numberguesser.contract.navigator
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.example.numberguesser.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -16,7 +17,7 @@ class MainFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         options = arguments?.getParcelable(KEY_OPTIONS)
-            ?: throw IllegalArgumentException("Can't launch MainFragment without options")
+            ?: Options.DEFAULT
     }
 
     override fun onCreateView(
@@ -29,7 +30,7 @@ class MainFragment : Fragment() {
 
         binding.numberRangeSlider.value = (requireActivity() as MainActivity).preferences.getFloat(
             MainActivity.PREF_SLIDER_VAL,
-            1000F
+            Options.DEFAULT.maxNumber.toFloat()
         )
         binding.numberRangeSlider.addOnChangeListener { _, value, _ ->
             (requireActivity() as MainActivity).preferences.edit()
@@ -60,19 +61,15 @@ class MainFragment : Fragment() {
     }
 
     private fun onStartPressed() {
-        navigator().showGameScreen()
+        options.tryNumber = 1
+        options.curNumber = options.maxNumber / 2
+        findNavController().navigate(
+            R.id.action_mainFragment_to_gameFragment,
+            bundleOf(GameFragment.KEY_OPTIONS to options)
+        )
     }
 
     companion object {
-        @JvmStatic
-        private val KEY_OPTIONS = "OPTIONS"
-
-        fun newInstance(options: Options): MainFragment {
-            val args = Bundle()
-            args.putParcelable(KEY_OPTIONS, options)
-            val fragment = MainFragment()
-            fragment.arguments = args
-            return fragment
-        }
+        const val KEY_OPTIONS = "OPTIONS"
     }
 }
