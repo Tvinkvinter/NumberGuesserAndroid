@@ -5,15 +5,15 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     tools:context=".MainFragment">
 
     <View
-        android:id="@+id/top_panel1"
+        android:id="@+id/top_panel"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@color/primary_color"
         android:elevation="8dp"
+        android:transitionName="topPanelExpanded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

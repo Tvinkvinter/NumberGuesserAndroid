@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity(){
     lateinit var preferences: SharedPreferences
     private lateinit var options: Options
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity(){
         options = savedInstanceState?.getParcelable(KEY_OPTIONS) ?: Options.DEFAULT
         binding.openMenuButton.setOnClickListener {
             binding.drawer.openDrawer(GravityCompat.END)
+            //menuButtonAnim = AnimationUtils.loadAnimation(applicationContext, R.anim.move_left)
+            //it.startAnimation(menuButtonAnim)
         }
 
         setMenu()

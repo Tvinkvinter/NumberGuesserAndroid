@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     tools:context=".FinishFragment">
 
     <View
@@ -13,6 +12,7 @@
         android:layout_height="100dp"
         android:background="@color/primary_color"
         android:elevation="8dp"
+        android:transitionName="topPanelNormal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
