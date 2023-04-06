@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="instruction_main_1">Exponer rango de juego</string>
+    <string name="instruction_take_attempts">Necesitará %d intentos para adivinar el número</string>
+    <string name="attempt_number">Intento %d</string>
+    <string name="start_button_text">Jugar</string>
+    <string name="more_button">Más</string>
+    <string name="less_button">Menos</string>
+    <string name="more_button_warning">El número no puede ser mayor que %d</string>
+    <string name="less_button_warning">El número no puede ser menor que %d</string>
+    <string name="finish_button">Número adivinado</string>
+    <string name="help_dialog_title">Leyes del juego</string>
+    <string name="help_dialog_message">Adivina el número en el rango expuesto y memorizarlo. El programa intentará adivinarlo. Después de cada intento, indique si su número es mayor o menor. Cuando se adivine el número, haga clic en El botón \"número adivinado\".</string>
+    <string name="finish_text">Adivinado</string>
+    <string name="finish_attempts">por %d intentos</string>
+    <string name="again_button">Una vez más</string>
+    <string name="go_to_begin_button">A principio</string>
+    <string name="dark_mode">Tema oscuro</string>
+    <string name="open_menu_button_description">Abrir el menú</string>
+</resources>
