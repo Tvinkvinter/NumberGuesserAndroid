@@ -24,4 +24,10 @@
     <string name="dark_mode">Темная тема</string>
     <string name="open_menu_button_description">Открыть меню</string>
     <string name="help_dialog_ok" translatable="false">OK</string>
+
+    <string name="spinner_title">Язык</string>
+    <string name="rus_lang" translatable="false">Русский</string>
+    <string name="zh_lang" translatable="false">中文</string>
+    <string name="eng_lang" translatable="false">English</string>
+    <string name="es_lang" translatable="false">Español</string>
 </resources>

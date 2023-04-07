@@ -8,5 +8,10 @@
         android:id="@+id/switch_item"
         android:title="@string/dark_mode"
         app:actionViewClass="com.google.android.material.switchmaterial.SwitchMaterial" />
-
+    <group android:menuCategory="container">
+        <item
+            android:id="@+id/spinner_item"
+            android:title="@string/spinner_title"
+            app:actionViewClass="android.widget.Spinner" />
+    </group>
 </menu>

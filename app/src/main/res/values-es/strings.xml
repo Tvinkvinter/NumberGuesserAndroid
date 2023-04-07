@@ -17,4 +17,5 @@
     <string name="go_to_begin_button">A principio</string>
     <string name="dark_mode">Tema oscuro</string>
     <string name="open_menu_button_description">Abrir el menú</string>
+    <string name="spinner_title">Idioma</string>
 </resources>
