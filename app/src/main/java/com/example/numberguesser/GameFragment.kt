@@ -36,6 +36,10 @@ class GameFragment : Fragment() {
     ): View {
         options = requireArguments().getParcelable(KEY_OPTIONS)!!
         limitPow = countMaxTries(options.maxNumber)
+        if (options.tryNumber >= limitPow){
+            options.tryNumber = 1
+            options.curNumber = options.maxNumber / 2
+        }
         curRange = options.curNumber
 
         binding = FragmentGameBinding.inflate(inflater)
@@ -95,10 +99,6 @@ class GameFragment : Fragment() {
     }
 
     private fun onClickFinish() {
-        if (options.tryNumber >= limitPow) {
-            requireActivity().supportFragmentManager.popBackStack()
-        }
-
         findNavController().navigate(
             R.id.action_gameFragment_to_finishFragment,
             bundleOf(FinishFragment.KEY_OPTIONS to options)
