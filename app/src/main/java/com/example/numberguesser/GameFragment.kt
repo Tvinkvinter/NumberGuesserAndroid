@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.numberguesser.databinding.FragmentGameBinding
+import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
@@ -40,7 +41,7 @@ class GameFragment : Fragment() {
             options.tryNumber = 1
             options.curNumber = options.maxNumber / 2
         }
-        curRange = options.curNumber
+        curRange = (options.maxNumber / 2.0.pow(options.tryNumber)).toInt()
 
         binding = FragmentGameBinding.inflate(inflater)
 
