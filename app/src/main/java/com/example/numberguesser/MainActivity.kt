@@ -3,12 +3,17 @@ package com.example.numberguesser
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.SimpleAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import com.example.numberguesser.databinding.ActivityMainBinding
+import com.example.numberguesser.util.LocaleHelper
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class MainActivity : AppCompatActivity() {
@@ -91,6 +96,47 @@ class MainActivity : AppCompatActivity() {
             intArrayOf(R.id.text_lang, R.id.icon_lang)
         )
         spinner.adapter = adapter
+        spinner.setSelection(
+            when(resources.configuration.locales[0].language){
+                "en" -> 0
+                "es" -> 1
+                "ru" -> 2
+                "zh" -> 3
+                else -> 0
+            }, false
+        )
+        spinner.onItemSelectedListener = object:OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+                val curLang = resources.configuration.locales[0].language
+                if(p1 == null) return
+                val langCode = when(p2){
+                    0 -> "en"
+                    1 -> "es"
+                    2 -> "ru"
+                    3 -> "zh"
+                    else -> "en"
+                }
+
+                Log.i("spinner", "item selected $p2 $curLang -> $langCode ")
+
+                if (langCode != curLang){
+                    LocaleHelper().setLocale(this@MainActivity, langCode)
+                    recreate()
+                }
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Log.i("spinner", "nothing selected")
+            }
+
+        }
+    }
+
+    override fun attachBaseContext(base: Context) {
+        LocaleHelper().setLocale(base, LocaleHelper().getLanguage(base))
+        super.attachBaseContext(LocaleHelper().onAttach(base))
     }
 
     companion object {
