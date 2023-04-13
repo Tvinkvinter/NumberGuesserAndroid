@@ -3,6 +3,9 @@
     <string name="instruction_main_1">Выставь диапазон игры</string>
     <string name="guessed_number_range" translatable="false">%d - %d</string>
     <string name="instruction_take_attempts">Понадобится %d попыток, чтобы угадать число</string>
+    <string name="exit_confirmation">Вы действительно хотите выйти из приложения?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 
     <string name="attempt_number">Попытка %d</string>
     <string name="start_button_text">Играть</string>
@@ -20,7 +23,6 @@
     <string name="finish_attempts">за %d попыток</string>
     <string name="again_button">Еще раз</string>
     <string name="go_to_begin_button">В начало</string>
-    <string name="background_description" translatable="false">Background with shapes or numbers</string>
     <string name="dark_mode">Темная тема</string>
     <string name="open_menu_button_description">Открыть меню</string>
     <string name="help_dialog_ok" translatable="false">OK</string>

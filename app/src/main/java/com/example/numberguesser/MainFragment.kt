@@ -65,7 +65,6 @@ class MainFragment : Fragment() {
     private fun onStartPressed() {
         options.tryNumber = 1
         options.curNumber = options.maxNumber / 2
-        //(requireActivity() as MainActivity).shrinkPanel()
         findNavController().navigate(
             R.id.action_mainFragment_to_gameFragment,
             bundleOf(GameFragment.KEY_OPTIONS to options), null,

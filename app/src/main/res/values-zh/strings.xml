@@ -18,4 +18,7 @@
     <string name="dark_mode">黑暗主题</string>
     <string name="open_menu_button_description">打开菜单</string>
     <string name="spinner_title">语言</string>
+    <string name="exit_confirmation">你真的想退出应用程序吗？</string>
+    <string name="yes">是的</string>
+    <string name="no">非也。</string>
 </resources>

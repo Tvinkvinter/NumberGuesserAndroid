@@ -1,18 +1,23 @@
 package com.example.numberguesser
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.Button
 import android.widget.SimpleAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
+import androidx.navigation.findNavController
 import com.example.numberguesser.databinding.ActivityMainBinding
 import com.example.numberguesser.util.LocaleHelper
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -36,6 +41,30 @@ class MainActivity : AppCompatActivity() {
 
         setMenu()
         restoreFromSharedPreferences()
+    }
+
+    override fun onBackPressed() {
+        if (binding.fragmentContainer.findNavController().backQueue.size == 2) {
+            val builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
+            val view = LayoutInflater.from(this).inflate(
+                R.layout.exit_dialog_card, this.findViewById(R.id.dialog_card)
+            )
+            builder.setView(view)
+
+            val alertDialog = builder.create()
+
+            if (alertDialog.window != null) {
+                alertDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+            }
+            (view.findViewById(R.id.dialog_yes_button) as Button).setOnClickListener {
+                alertDialog.dismiss()
+                super.onBackPressed()
+            }
+            (view.findViewById(R.id.dialog_no_button) as Button).setOnClickListener {
+                alertDialog.dismiss()
+            }
+            alertDialog.show()
+        } else super.onBackPressed()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -99,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         )
         spinner.adapter = adapter
         spinner.setSelection(
-            when(resources.configuration.locales[0].language){
+            when (resources.configuration.locales[0].language) {
                 "en" -> 0
                 "es" -> 1
                 "ru" -> 2
@@ -107,12 +136,12 @@ class MainActivity : AppCompatActivity() {
                 else -> 0
             }, false
         )
-        spinner.onItemSelectedListener = object:OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
                 val curLang = resources.configuration.locales[0].language
-                if(p1 == null) return
-                val langCode = when(p2){
+                if (p1 == null) return
+                val langCode = when (p2) {
                     0 -> "en"
                     1 -> "es"
                     2 -> "ru"
@@ -122,7 +151,7 @@ class MainActivity : AppCompatActivity() {
 
                 Log.i("spinner", "item selected $p2 $curLang -> $langCode ")
 
-                if (langCode != curLang){
+                if (langCode != curLang) {
                     LocaleHelper().setLocale(this@MainActivity, langCode)
                     recreate()
                 }
