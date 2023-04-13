@@ -11,6 +11,7 @@ import android.widget.SimpleAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import com.example.numberguesser.databinding.ActivityMainBinding
 import com.example.numberguesser.util.LocaleHelper
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
         preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
