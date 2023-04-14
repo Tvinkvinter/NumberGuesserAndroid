@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.example.numberguesser.databinding.FragmentGameBinding
+import com.example.numberguesser.util.GameState
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
@@ -23,28 +24,37 @@ class GameFragment : Fragment() {
 
     private lateinit var options: Options
 
+    private var history = mutableListOf<GameState>()
+
     private var limitPow by Delegates.notNull<Int>()
 
     private var curRange by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        history.clear()
         options = requireArguments().getParcelable(KEY_OPTIONS)!!
         limitPow = countMaxTries(options.maxNumber)
-        if (options.tryNumber >= limitPow){
+        if (options.tryNumber >= limitPow) {
             options.tryNumber = 1
             options.curNumber = options.maxNumber / 2
         }
         curRange = (options.maxNumber / 2.0.pow(options.tryNumber)).toInt()
+        history.add(GameState(curRange, options.tryNumber, options.curNumber))
 
         binding = FragmentGameBinding.inflate(inflater)
 
+        binding.prevAttemptButton.setOnClickListener {
+            onPrevButton()
+        }
         binding.openMenuButton.setOnClickListener {
             showHelpCardDialog()
         }
@@ -63,6 +73,16 @@ class GameFragment : Fragment() {
         outState.putParcelable(KEY_OPTIONS, options)
     }
 
+    private fun onPrevButton() {
+        history.removeLast()
+        if (history.size == 1) binding.prevAttemptButton.visibility = View.GONE
+        options.tryNumber = history.last().tryNumber
+        options.curNumber = history.last().curNumber
+        curRange = history.last().curRange
+        binding.attemptsSpentText.text = getString(R.string.attempt_number, options.tryNumber)
+        binding.currentNumber.text = options.curNumber.toString()
+    }
+
     private fun onClickButtons(v: View) {
         when (v.id) {
             R.id.less_button -> onClickLessButton()
@@ -70,6 +90,8 @@ class GameFragment : Fragment() {
         }
         binding.attemptsSpentText.text = getString(R.string.attempt_number, options.tryNumber)
         binding.currentNumber.text = options.curNumber.toString()
+        history.add(GameState(curRange, options.tryNumber, options.curNumber))
+        binding.prevAttemptButton.visibility = View.VISIBLE
         if (options.tryNumber >= limitPow) onClickFinish()
     }
 

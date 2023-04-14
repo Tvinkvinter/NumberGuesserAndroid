@@ -18,8 +18,10 @@ class FinishFragment : Fragment() {
     private lateinit var options: Options
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,8 +52,10 @@ class FinishFragment : Fragment() {
             R.id.mainFragment,
             null,
             NavOptions.Builder()
-                .setPopUpTo(R.id.mainFragment,
-                    true).build(),
+                .setPopUpTo(
+                    R.id.mainFragment,
+                    true
+                ).build(),
             FragmentNavigatorExtras(binding.topPanel to "topPanelExpanded")
         )
     }
