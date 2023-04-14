@@ -5,5 +5,6 @@
         <item name="colorPrimary">@color/primary_color</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondary_color</item>
+        <item name="android:colorPrimaryDark">@color/primary_color</item>
     </style>
 </resources>
