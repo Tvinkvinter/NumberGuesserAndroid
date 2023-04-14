@@ -40,7 +40,7 @@ class GameFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        history.clear()
+        binding = FragmentGameBinding.inflate(inflater)
         options = requireArguments().getParcelable(KEY_OPTIONS)!!
         limitPow = countMaxTries(options.maxNumber)
         if (options.tryNumber >= limitPow) {
@@ -48,9 +48,12 @@ class GameFragment : Fragment() {
             options.curNumber = options.maxNumber / 2
         }
         curRange = (options.maxNumber / 2.0.pow(options.tryNumber)).toInt()
-        history.add(GameState(curRange, options.tryNumber, options.curNumber))
-
-        binding = FragmentGameBinding.inflate(inflater)
+        if (options.tryNumber == 1) {
+            history.clear()
+            history.add(GameState(curRange, options.tryNumber, options.curNumber))
+            binding.prevAttemptButton.visibility = View.GONE
+        } else if (options.tryNumber != history.last().tryNumber)
+            history.add(GameState(curRange, options.tryNumber, options.curNumber))
 
         binding.prevAttemptButton.setOnClickListener {
             onPrevButton()
@@ -75,7 +78,7 @@ class GameFragment : Fragment() {
 
     private fun onPrevButton() {
         history.removeLast()
-        if (history.size == 1) binding.prevAttemptButton.visibility = View.GONE
+        if (history.last().tryNumber == 1) binding.prevAttemptButton.visibility = View.GONE
         options.tryNumber = history.last().tryNumber
         options.curNumber = history.last().curNumber
         curRange = history.last().curRange
