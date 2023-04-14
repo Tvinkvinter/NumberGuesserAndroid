@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="text_color">#FFFFFF</color>
-    <color name="background">#333037</color>
+    <color name="text_color">#F5F5F5</color>
+    <color name="background">#23273C</color>
+    <color name="card_background">#2D3248</color>
 </resources>
