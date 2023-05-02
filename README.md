@@ -8,6 +8,7 @@ This is an application that will guess your number in a small number of attempts
 - Ability to cancel a move
 - Help button in the game
 - Protection against accidental exit
+- Protection against going out of the specified range
 ## Screens
 <img src="https://user-images.githubusercontent.com/57190118/235635395-65bd3f17-dc56-4907-8f5d-0d5b2f7d2263.jpg" width="200" /> <img src="https://user-images.githubusercontent.com/57190118/235635961-ecb7461b-8c44-411d-8cc9-8399a20d6eba.jpg" width="200" />
 <img src="https://user-images.githubusercontent.com/57190118/235635974-6b65bdb6-c094-49c2-9ea7-6ba19c694ce2.jpg" width="200" />
@@ -28,3 +29,4 @@ This is an application that will guess your number in a small number of attempts
 - Navigation Component
 - Transitions
 - SplashScreen API
+- Custom Dialog
